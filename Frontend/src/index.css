@@ -1,0 +1,79 @@
+@import "@flaticon/flaticon-uicons/css/all/all";
+@import url('https://fonts.googleapis.com/css2?family=Amaranth:ital,wght@0,400;0,700;1,400;1,700&family=Berkshire+Swash&family=Fredoka:wght@300..700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.fredoka{
+  font-family: "Fredoka", serif;
+}
+
+.amaranth {
+  font-family: "Amaranth", serif;
+}
+
+.berkshire-swash {
+  font-family: "Berkshire Swash", serif;
+}
+
+body{
+  background-color: linear-gradient(45deg, black, pink,orange);
+}
+
+.fade-right {
+    animation: fadeRight 1s ease-in-out forwards;
+}
+  
+@keyframes fadeRight {
+  0% {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0); /* Adjust the value to set how far it fades right */
+  }
+}
+
+@layer base {
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}
+
+.typewriter{
+  width: fit-content; /* Adjust width to fit content */
+  white-space: nowrap; /* Prevent line breaks */
+}
+  
+.typewriter h2{
+  display: inline-block; /* Make the h2 inline-block to respect width */
+  width: 0;
+  border-right: 2px solid orange;
+  overflow: hidden;
+  animation: typeErase 10s steps(30) infinite, blink 0.75s step-end infinite;
+}
+
+@keyframes typeErase{
+  0%{
+    width: 0;
+  }
+  40%{
+    width: 100%;
+  }
+  60%{
+    width: 100%;
+  }
+  100%{
+    width: 0;
+  }
+}
+
+@keyframes blink {
+  50% {
+    border-color: transparent;
+  }
+}

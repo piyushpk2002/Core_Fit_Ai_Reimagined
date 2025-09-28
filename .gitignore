@@ -1,0 +1,10 @@
+...existing code...
+/backend/node_modules/
+/frontend/node_modules/
+.env
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+/dist
+/build
+.DS_Store
