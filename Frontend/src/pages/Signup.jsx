@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux"
 import { registerUser } from "../store/features/authSlice";
 
 let initialformData = {
-	name: "",
+	userName: "",
 	email: "",
 	password: "",
 }
@@ -21,11 +21,15 @@ const Signup = () => {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 
-		// Add your form submission logic here
+		// Add your form submission logic 
 		dispatch(registerUser(formData)).then((res) => {
-			console.log(res?.payload);
-			alert(res?.payload?.message);
-			if(res?.payload?.success){
+			//console.log(res);
+			
+			
+			console.log(res);
+			alert(res?.payload?.data.message);
+			console.log(res?.payload?.status == 200);
+			if(res?.payload?.status == 200){
 				navigate("/auth/login")
 			}
 		})
@@ -48,7 +52,7 @@ const Signup = () => {
 						</label>
 						<input
 							type="text"
-							name="name"
+							name="userName"
 							placeholder="Enter your name"
 							value={formData.name}
 							onChange={handleChange}

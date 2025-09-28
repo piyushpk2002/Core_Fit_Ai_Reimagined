@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { log } from "@tensorflow/tfjs";
 import axios from 'axios';
 
 const initialState = {
@@ -11,19 +12,33 @@ const initialState = {
 }
 
 export const registerUser = createAsyncThunk('/auth/register', async(userData) => {
-    const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/user/register`,
+    
+    const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/auth/signup`,
         userData,
         { withCredentials: true }
     )
-    return response.data;
+    //console.log(response);
+    
+    return response;
 })
 
-export const loginUser = createAsyncThunk('/auth/login', async (userData) => {
-    const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/user/login`,
-        userData,
-        { withCredentials: true}
-    )
-    return response.data;
+export const loginUser = createAsyncThunk('/auth/login', async (userData, { rejectWithValue }) => {
+    try {
+        const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/auth/login`,
+            userData,
+            { withCredentials: true}
+        )
+        return response.data;
+    } catch (error) {
+        console.log(error);
+        
+        if(error.response){
+            return rejectWithValue({
+                status: error.response.status,
+                message: error.response.data.message
+            })
+        }
+    }
 })
 
 export const logoutUser = createAsyncThunk('/auth/logout', async () => {
@@ -74,7 +89,7 @@ const authSlice = createSlice({
         }).addCase(loginUser.fulfilled, (state, action) => {
             state.isLoading = false,
             state.isAuthenticated = true,
-            state.user = action.payload.data
+            state.user = action.payload.user
         }).addCase(logoutUser.fulfilled, (state) => {
             state.isLoading = false,
             state.user = null,

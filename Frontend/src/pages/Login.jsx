@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { loginUser } from "../store/features/authSlice";
+import { log } from "@tensorflow/tfjs";
 
 let initialformData = {
     email: "",
@@ -21,12 +22,15 @@ const Login = () => {
     e.preventDefault();
 
     // Add your form submission logic here
-    dispatch(loginUser(formData)).then((res) => {
-      console.log(res?.payload);
-      alert(res?.payload?.message);
-      if(res?.payload?.success){
+    dispatch(loginUser(formData))
+    .unwrap()
+    .then((res) => {
+      console.log("res: ", res);
+      alert(res?.message);
         navigate("/")
-      }
+    }).catch((error) => {
+      console.log(error);
+      alert(error.message);
     })
   };
 
